@@ -1,9 +1,11 @@
 /*!
-* Skew v0.3
+* Skew v0.4
 * Copyright 2018 Marcin Walczak
 *This file is part of Skew which is released under MIT license.
 *See LICENSE for full license details.
 */
+
+//jQuery plugin
 if(window.jQuery) {
     $.fn.skew = function(options) {
         var args = $.makeArray(arguments);
@@ -27,7 +29,7 @@ if(window.jQuery) {
                     var settings = $.extend({
                         x: 0,
                         y: 0,
-                        breakpoints: []
+                        breakpoints: [],
                     }, options);
                     instance.update(settings);
                 }
@@ -48,8 +50,9 @@ if(window.jQuery) {
     };
 }
 
+//constructor
 function Skew(elements, settings) {
-
+    //affected DOM elements
     if(typeof elements == 'string')
         this.targets = document.querySelectorAll(elements);
     else if(elements.nodeType)
@@ -57,14 +60,36 @@ function Skew(elements, settings) {
     else
         this.targets = elements;
 
-    settings = this.parseSettings(settings);
-    this.x = settings.x;
-    this.y = settings.y;
-    this.breakpoints = settings.breakpoints;
+    this.defaults = {
+        x: 0,
+        y: 0,
+        breakpoints: [],
+        debounce: false,
+        debounceTime: 50
+    };
+
+    this.options = this.defaults;
+
+    this.timeout;
+
+    this.update(settings);
 
     this.skew();
+
     var self = this;
-    this.resizeEvent = function(){self.skew();}
+    //window.resize event funtion
+    this.resizeEvent = function(){
+        if(self.debounce) {
+            var later = function() {
+                self.timeout = null;
+                self.skew();
+            };
+            clearTimeout(self.timeout);
+            self.timeout = setTimeout(later, 50);
+        }
+        else
+            self.skew();
+    }
 
     window.addEventListener('resize', this.resizeEvent);
 
@@ -79,14 +104,14 @@ Skew.prototype = {
             var target = self.targets[i];    
             var width = target.offsetWidth;
             var height = target.offsetHeight;
-            var skewX = self.x;
-            var skewY = self.y;
+            var skewX = self.options.x;
+            var skewY = self.options.y;
             
-            if(self.breakpoints !== undefined)
+            if(self.options.breakpoints !== undefined)
             {
                 var winWidth = window.innerWidth;
 
-                self.breakpoints.forEach(function(breakpoint){
+                self.options.breakpoints.forEach(function(breakpoint){
                     if(breakpoint.break >= winWidth) {
                         skewX = breakpoint.x;
                         skewY = breakpoint.y;
@@ -142,10 +167,9 @@ Skew.prototype = {
     },
 
     update: function(settings) {
-        settings = this.parseSettings(settings);
-        this.x = (settings.x !== undefined ? settings.x : 0);
-        this.y = (settings.y !== undefined ? settings.y : 0);
-        this.breakpoints = (settings.breakpoints !== undefined ? settings.breakpoints : 0);
+        this.options = this.parseSettings(settings, this.options);
+        console.log(settings)
+        console.log(this.options)
         this.skew();
 
         return this;
@@ -169,22 +193,35 @@ Skew.prototype = {
         }
     },
 
-    parseSettings: function(settings) {
-        var results = {x: 0, y: 0, breakpoints: []};
+    parseSettings: function(settings, defaults) {
+        var results = (defaults !== undefined ? defaults : this.defaults);
+        
         if(settings !== undefined) {
-            results.x = (settings.x !== undefined ? settings.x : 0);
-            results.y = (settings.y !== undefined ? settings.y : 0);
-            results.breakpoints = [];
-            if(Array.isArray(settings.breakpoints))
+            if(settings.x !== undefined)
+                results.x = settings.x;
+
+            if(settings.y !== undefined)
+                results.y = settings.y;
+
+            if(Array.isArray(settings.breakpoints)) {
+                results.breakpoints = [];
+                
                 settings.breakpoints.forEach(function(breakpoint) {
+                    
                     results.breakpoints.push({
                         break: (breakpoint.break !== undefined ? breakpoint.break : 0),
                         x: (breakpoint.x !== undefined ? breakpoint.x : 0),
                         y: (breakpoint.y !== undefined ? breakpoint.y : 0)
-                    });
+                    });                    
                 });
-        }
+            }
 
+            if(settings.debounce !== undefined)
+                results.debounce = settings.debounce; 
+
+            if(settings.debounceTime !== undefined)
+                results.debounceTime = settings.debounceTime;
+        }
         return results;
     }
 };
