@@ -8,7 +8,8 @@
 * can be used standalone and with jQuery,
 * responsiveness - breakpoints definition,
 * debouncing (optional),
-* cross-browser - supports IE9+ and modern browsers.
+* cross-browser - supports IE9+ and modern browsers,
+* lightweight - < 3kB minified.
 
 ## Getting started
 Before closing <body> tag add:
@@ -28,7 +29,7 @@ Before closing <body> tag add:
     $('selector').skew({x: 50});
   });
   ```
-  **Important: To calculate skew transformation correctly, Skew needs to be executec after document is loaded, by creating Skew object, or firing Skew.skew() function.**
+  **Important: To calculate skew transformation correctly, Skew needs to be execute after document is loaded, by creating Skew object, or firing Skew.skew() function.**
   
 ## Syntax
 
