@@ -12,7 +12,7 @@
 * lightweight - ~3kB minified.
 
 ## Getting started
-Before closing <body> tag add:
+Before closing ```<body>``` tag add:
   ```html
   <script type="text/javascript" src="skew.min.js"></script>
   ```
