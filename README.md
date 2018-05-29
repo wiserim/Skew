@@ -38,7 +38,7 @@ var skewObj = new Skew('css selector', {option: value});
 //example
 var skewObj = new Skew('.skew', {x: 50, y: 100, breakpoints: [{break: 768, x: 30}]});
 
-skewObject.function(argument);
+skewObject.method(argument);
 //example
 skewObj.update({x: 30, breakpoints: [{break: 768, x: 15}]});
 ```
@@ -48,7 +48,7 @@ $('selector').skew({option: value});
 //example
 $('.skew').skew({x: 50, y: 100, breakpoints: [{break: 768, x: 30}]});
 
-$('selector').skew('function', argument);
+$('selector').skew('method', argument);
 //example
 $('.skew').skew('update', {x: 30, breakpoints: [{break: 768, x: 15}]});
 ```
@@ -59,6 +59,33 @@ $('.skew').skew('update', {x: 30, breakpoints: [{break: 768, x: 15}]});
   ------------ | ------------- | ------------ | -------------
   x | int | 0 | Element's skew on x axis in pixels.
   y | int | 0 | Element's skew on y axis in pixels.
-  breakpoints | array | [] | Array of objects containing breakpoints and setting objects.
+  breakpoints | array | [] | Array of objects containing breakpoints and setting objects ([see example](#breakpoints-option-example)).
   debounce | boolean | false | Debounce on resize event.
-  debounceTime | int | 50 | Time between event emits, which will be debounced in ms.
+  debounceTime | int | 50 | Debounce time tollerance in ms.
+  
+  ### Breakpoints option example
+  
+  ```javascript
+  var skewObj = new Skew(
+    '.skew',
+    {
+      x: 30,
+      y: 60,
+      breakpoints: [
+        {
+          break: 1024
+          x: 60,
+          y: 30
+        },
+        {
+          break: 768,
+          x: 30
+        },
+        {
+          break: 480,
+          y: 60
+        }
+      ]
+    }
+  );
+  ```
