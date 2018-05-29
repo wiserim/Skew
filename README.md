@@ -9,7 +9,7 @@
 * responsiveness - breakpoints definition,
 * debouncing (optional),
 * cross-browser - supports IE9+ and modern browsers,
-* lightweight - < 3kB minified.
+* lightweight - ~3kB minified.
 
 ## Getting started
 Before closing <body> tag add:
@@ -29,7 +29,6 @@ Before closing <body> tag add:
     $('selector').skew({x: 50});
   });
   ```
-  **Important: To calculate skew transformation correctly, Skew needs to be execute after document is loaded, by creating Skew object, or firing Skew.skew() function.**
   
 ## Syntax
 
@@ -61,7 +60,7 @@ $('.skew').skew('update', {x: 30, breakpoints: [{break: 768, x: 15}]});
   x | int | 0 | Element's skew on x axis in pixels.
   y | int | 0 | Element's skew on y axis in pixels.
   breakpoints | array | [] | Array of objects containing breakpoints and setting objects ([see example](#breakpoints-option-example)).
-  debounce | boolean | false | Debounce on resize event.
+  debounce | boolean | true | Debounce on resize event.
   debounceTime | int | 50 | Debounce time tollerance in ms.
   
   ### Breakpoints option example
@@ -76,7 +75,9 @@ $('.skew').skew('update', {x: 30, breakpoints: [{break: 768, x: 15}]});
         {
           break: 1024
           x: 60,
-          y: 30
+          y: 30,
+          debounce: false,
+          debounceTime: 30
         },
         {
           break: 768,
@@ -90,3 +91,11 @@ $('.skew').skew('update', {x: 30, breakpoints: [{break: 768, x: 15}]});
     }
   );
   ```
+
+  ## Methods
+
+  Method | Argument | Description
+  ------------ | ------------- | ------------
+  skew | | Recalculates skew
+  update | options : object | Update Skew options
+  destroy | | Destroys Skew

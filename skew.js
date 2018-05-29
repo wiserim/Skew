@@ -1,5 +1,5 @@
 /*!
-* Skew v0.4
+* Skew v0.5
 * Copyright 2018 Marcin Walczak
 *This file is part of Skew which is released under MIT license.
 *See LICENSE for full license details.
@@ -64,7 +64,7 @@ function Skew(elements, settings) {
         x: 0,
         y: 0,
         breakpoints: [],
-        debounce: false,
+        debounce: true,
         debounceTime: 50
     };
 
@@ -77,21 +77,40 @@ function Skew(elements, settings) {
     this.skew();
 
     var self = this;
-    //window.resize event funtion
-    this.resizeEvent = function(){
-        if(self.debounce) {
+
+
+    //method fired on load/resize event, can be used to debounce custom events.
+    this.eventMethod = function() {
+        var debounce = self.options.debounce;
+        var debounceTime = self.options.debounceTime;
+
+        if(self.options.breakpoints !== undefined) {
+            var winWidth = window.innerWidth;
+
+            self.options.breakpoints.forEach(function(breakpoint){
+                if(breakpoint.break >= winWidth) {
+                    if(breakpoint.debounce !== undefined)
+                        debounce = breakpoint.debounce;
+                    if(breakpoint.debounceTime !== undefined)
+                        debounceTime = breakpoint.debounceTime;
+                }
+            });
+        }
+
+        if(debounce) {
             var later = function() {
                 self.timeout = null;
                 self.skew();
             };
             clearTimeout(self.timeout);
-            self.timeout = setTimeout(later, 50);
+            self.timeout = setTimeout(later, debounceTime);
         }
         else
             self.skew();
     }
 
-    window.addEventListener('resize', this.resizeEvent);
+    window.addEventListener('load', this.eventMethod);
+    window.addEventListener('resize', this.eventMethod);
 
     return this;
 };
@@ -107,14 +126,15 @@ Skew.prototype = {
             var skewX = self.options.x;
             var skewY = self.options.y;
             
-            if(self.options.breakpoints !== undefined)
-            {
+            if(self.options.breakpoints !== undefined) {
                 var winWidth = window.innerWidth;
 
-                self.options.breakpoints.forEach(function(breakpoint){
+                self.options.breakpoints.forEach(function(breakpoint) {
                     if(breakpoint.break >= winWidth) {
-                        skewX = breakpoint.x;
-                        skewY = breakpoint.y;
+                        if(breakpoint.x !== undefined)
+                            skewX = breakpoint.x;
+                        if(breakpoint.y !== undefined)
+                            skewY = breakpoint.y;
                     }
                 });
             }
@@ -168,8 +188,6 @@ Skew.prototype = {
 
     update: function(settings) {
         this.options = this.parseSettings(settings, this.options);
-        console.log(settings)
-        console.log(this.options)
         this.skew();
 
         return this;
@@ -207,12 +225,23 @@ Skew.prototype = {
                 results.breakpoints = [];
                 
                 settings.breakpoints.forEach(function(breakpoint) {
-                    
-                    results.breakpoints.push({
-                        break: (breakpoint.break !== undefined ? breakpoint.break : 0),
-                        x: (breakpoint.x !== undefined ? breakpoint.x : 0),
-                        y: (breakpoint.y !== undefined ? breakpoint.y : 0)
-                    });                    
+                    var breakObj = {
+                        break: (breakpoint.break !== undefined ? breakpoint.break : 0)
+                    };
+
+                    if(breakpoint.x !== undefined)
+                        breakObj.x = breakpoint.x;
+
+                    if(breakpoint.y !== undefined)
+                        breakObj.y = breakpoint.y;
+
+                    if(breakpoint.debounce !== undefined)
+                        breakObj.debounce = breakpoint.debounce;
+
+                    if(breakpoint.debounceTime !== undefined)
+                        breakObj.debounce = breakpoint.debounceTime;
+
+                    results.breakpoints.push(breakObj);
                 });
             }
 
