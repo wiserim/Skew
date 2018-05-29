@@ -4,11 +4,11 @@
 
 **Features:**
 * calculation of skew transformation measured in pixels,
-* update skew on resize,
+* skew update on resize,
 * can be used standalone and with jQuery,
 * responsiveness - breakpoints definition,
-* debouncing (optional).
-* cross-browser - supports IE9+ and modern browsers
+* debouncing (optional),
+* cross-browser - supports IE9+ and modern browsers.
 
 ## Getting started
 Before closing <body> tag add:
