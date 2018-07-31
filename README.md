@@ -3,17 +3,18 @@
 </p>
 
 
-**Skew** is a standalone JavaScript library for performing skew transformations of DOM elements measured in pixels. It allows to keep element's skew by the same amount of pixels even after it's resize.
+**Skew** is a standalone JavaScript library for performing skew transformations of DOM elements measured in pixels. It allows to keep element's skew by the same amount of pixels even after it's resize and optionally unskew their content.
 
 **Features:**
 * calculation of skew transformation measured in pixels,
+* can unskew of element's content, 
 * skew update on resize,
 * dependency free,
 * can be used standalone with plain JavaScript or as jQuery plugin,
 * responsiveness - breakpoints definition,
-* debouncing (optional),
+* configurable debouncing,
 * cross-browser - supports IE9+ and modern browsers,
-* lightweight - ~3kB minified.
+* lightweight - ~4kB minified.
 
 ## Getting started
 Before closing ```<body>``` tag add:
@@ -63,9 +64,42 @@ $('.skew').skew('update', {x: 30, breakpoints: [{break: 768, x: 15}]});
   ------------ | ------------- | ------------ | -------------
   x | int | 0 | Element's skew on x axis in pixels.
   y | int | 0 | Element's skew on y axis in pixels.
+  unskewContent | bool/string | false | Element's content unskew option / css selector of element's content to unskew ([see example](#unskew-option-example))
   breakpoints | array | [] | Array of objects containing breakpoints and setting objects ([see example](#breakpoints-option-example)).
   debounce | boolean | true | Debounce on resize event.
   debounceTime | int | 50 | Debounce time tollerance in ms.
+  
+  ### Unskew option example
+  
+  ```javascript
+  //Unskew element's content
+  ar skewObj = new Skew(
+    '.skew',
+    {
+      x: 30,
+      unskewContent: true
+    }
+  );
+  
+  //Unskew element's content matching css selector
+  ar skewObj = new Skew(
+    '.skew',
+    {
+      x: 30,
+      unskewContent: '.skew-content'
+    }
+  );
+  
+  //Don't unskew element's content (default)
+  ar skewObj = new Skew(
+    '.skew',
+    {
+      x: 30,
+      unskewContent: false
+    }
+  );
+  
+  ```
   
   ### Breakpoints option example
   
@@ -80,12 +114,14 @@ $('.skew').skew('update', {x: 30, breakpoints: [{break: 768, x: 15}]});
           break: 1024
           x: 60,
           y: 30,
+          unskewContent: true,
           debounce: false,
           debounceTime: 30
         },
         {
           break: 768,
-          x: 30
+          x: 30,
+          unskewContent: '.skew-content'
         },
         {
           break: 480,
