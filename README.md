@@ -3,7 +3,7 @@
 </p>
 
 
-**Skew** is a standalone JavaScript library for performing skew transformations of DOM elements measured in pixels. It allows to keep element's skew by the same amount of pixels even after it's resize and optionally unskew it's content.
+**Skew** is a standalone JavaScript library for performing skew transformations of DOM elements measured in pixels. It allows to keep element's skew by the same amount of pixels even after it's resize and optionally unskew its content.
 
 **Features:**
 * calculation of skew transformation measured in pixels,
