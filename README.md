@@ -7,7 +7,7 @@
 
 **Features:**
 * calculation of skew transformation measured in pixels,
-* can unskew of element's content, 
+* unskew element's content, 
 * skew update on resize,
 * dependency free,
 * can be used standalone with plain JavaScript or as jQuery plugin,
