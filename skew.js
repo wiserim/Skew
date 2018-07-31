@@ -1,5 +1,5 @@
 /*!
-* Skew v0.5
+* Skew v0.6
 * Copyright 2018 Marcin Walczak
 *This file is part of Skew which is released under MIT license.
 *See LICENSE for full license details.
@@ -63,6 +63,7 @@ function Skew(elements, settings) {
     this.defaults = {
         x: 0,
         y: 0,
+        unskewContent: false,
         breakpoints: [],
         debounce: true,
         debounceTime: 50
@@ -70,11 +71,11 @@ function Skew(elements, settings) {
 
     this.options = this.defaults;
 
+    this.currentUnskewContent = this.options.unskewContent;
+
     this.timeout;
 
     this.update(settings);
-
-    this.skew();
 
     var self = this;
 
@@ -117,70 +118,74 @@ function Skew(elements, settings) {
 
 Skew.prototype = {
     skew: function() {
-        var self = this;
+        var self = this,
+        target = null,
+        width = 0,
+        height = 0,
+        skewX = self.options.x,
+        skewY = self.options.y,
+        skewXAngle = 0,
+        skewYAngle = 0;
+        content = [],
+        unskewContent = self.options.unskewContent,
+        contentSkewStyle = '';
+
+        if(self.options.breakpoints !== undefined) {
+            var winWidth = window.innerWidth;
+
+            self.options.breakpoints.forEach(function(breakpoint) {
+                if(breakpoint.break < winWidth)
+                    return;
+
+                if(breakpoint.x !== undefined)
+                    skewX = breakpoint.x;
+                if(breakpoint.y !== undefined)
+                    skewY = breakpoint.y;
+                
+                if(breakpoint.unskewContent !== undefined)
+                    unskewContent = breakpoint.unskewContent;
+            });
+
+            if(self.currentUnskewContent !== unskewContent) {
+
+                //removing previous content unskew
+                for(var i=0; i < self.targets.length; i++){
+                    target = self.targets[i];
+
+                    if(self.currentUnskewContent === true)
+                        content = target.childNodes;
+                    else if(typeof self.currentUnskewContent == 'string')
+                        content = target.querySelectorAll(self.currentUnskewContent);
+
+                    for(var j=0; j < content.length; j++){
+                        self.setSkewStyle(content[j], '');
+                    };
+                }
+                content = [];
+
+                self.currentUnskewContent = unskewContent;
+            }
+        }
         
         for(var i=0; i < self.targets.length; i++){
-            var target = self.targets[i];    
-            var width = target.offsetWidth;
-            var height = target.offsetHeight;
-            var skewX = self.options.x;
-            var skewY = self.options.y;
-            
-            if(self.options.breakpoints !== undefined) {
-                var winWidth = window.innerWidth;
-
-                self.options.breakpoints.forEach(function(breakpoint) {
-                    if(breakpoint.break >= winWidth) {
-                        if(breakpoint.x !== undefined)
-                            skewX = breakpoint.x;
-                        if(breakpoint.y !== undefined)
-                            skewY = breakpoint.y;
-                    }
-                });
-            }
+            target = self.targets[i];    
+            width = target.offsetWidth;
+            height = target.offsetHeight;
 
             skewXAngle = Math.atan(skewX/height);
             skewYAngle = Math.atan(skewY/width);
-            var skewStyle = 'skew('+skewXAngle+'rad, '+skewYAngle+'rad)';
-            var style = target.getAttribute('style');
+            skewStyle = 'skew('+skewXAngle+'rad, '+skewYAngle+'rad)';
+            self.setSkewStyle(target, skewStyle);
 
-            if(style === null) {
-                style = 'transform: '+skewStyle+';';
-                target.setAttribute('style', style);
-                continue;
-            }
+            if(unskewContent === true)
+                content = target.childNodes;
+            else if(typeof unskewContent == 'string')
+                content = target.querySelectorAll(unskewContent);
 
-            var transformIndex = style.indexOf('transform:');
-            if(transformIndex < 0) {
-                style += 'transform: '+skewStyle+';';
-                target.setAttribute('style', style);
-                continue;
-            }
-
-            var transformEndIndex = transformIndex+style.substring(transformIndex).indexOf(';');
-            if(transformEndIndex < transformIndex) {
-                transformEndIndex = style.length;
-                skewStyle += ';'
-            }
-
-            var skewIndex = style.indexOf('skew');
-            var pre = style.substring(0, transformEndIndex);
-            var post = style.substring(transformEndIndex);
-
-            if(skewIndex < 0){
-
-                style = pre+' '+skewStyle+post;
-                target.setAttribute('style', style);
-                continue;
-            }
-            
-            transformIndex = style.indexOf('skew');
-            transformEndIndex = transformIndex+style.substring(transformIndex).indexOf(')')+1;
-            pre = style.substring(0, transformIndex);
-            post = style.substring(transformEndIndex);
-
-            style = pre+skewStyle+post;
-            target.setAttribute('style', style);
+            contentSkewStyle = 'skew('+(-skewXAngle)+'rad, '+(-skewYAngle)+'rad)';
+            for(var j=0; j < content.length; j++){
+                self.setSkewStyle(content[j], contentSkewStyle);
+            };
         }
 
         return this;
@@ -208,6 +213,7 @@ Skew.prototype = {
                 var post = style.substring(skewEndIndex);
                 target.setAttribute('style', pre+post);
             }
+
         }
     },
 
@@ -220,6 +226,9 @@ Skew.prototype = {
 
             if(settings.y !== undefined)
                 results.y = settings.y;
+
+            if(settings.unskewContent !== undefined)
+                results.unskewContent = settings.unskewContent;
 
             if(Array.isArray(settings.breakpoints)) {
                 results.breakpoints = [];
@@ -235,6 +244,9 @@ Skew.prototype = {
                     if(breakpoint.y !== undefined)
                         breakObj.y = breakpoint.y;
 
+                    if(breakpoint.unskewContent !== undefined)
+                        breakObj.unskewContent = breakpoint.unskewContent;
+
                     if(breakpoint.debounce !== undefined)
                         breakObj.debounce = breakpoint.debounce;
 
@@ -242,6 +254,14 @@ Skew.prototype = {
                         breakObj.debounce = breakpoint.debounceTime;
 
                     results.breakpoints.push(breakObj);
+                });
+
+                results.breakpoints.sort(function(a, b) {
+                    if(a.break < b.break)
+                        return 1;
+                    if(a.break > b.break)
+                        return -1;
+                    return 0;
                 });
             }
 
@@ -252,5 +272,47 @@ Skew.prototype = {
                 results.debounceTime = settings.debounceTime;
         }
         return results;
+    },
+
+    setSkewStyle: function(element, skewStyle) {
+        var style = element.getAttribute('style');
+
+        if(style === null) {
+            style = 'transform: '+skewStyle+';';
+            element.setAttribute('style', style);
+            return;
+        }
+
+        var transformIndex = style.indexOf('transform:');
+        if(transformIndex < 0) {
+            style += 'transform: '+skewStyle+';';
+            element.setAttribute('style', style);
+            return;
+        }
+
+        var transformEndIndex = transformIndex+style.substring(transformIndex).indexOf(';');
+        if(transformEndIndex < transformIndex) {
+            transformEndIndex = style.length;
+            skewStyle += ';'
+        }
+
+        var skewIndex = style.indexOf('skew');
+        var pre = style.substring(0, transformEndIndex);
+        var post = style.substring(transformEndIndex);
+
+        if(skewIndex < 0){
+
+            style = pre+' '+skewStyle+post;
+            element.setAttribute('style', style);
+            return;
+        }
+        
+        transformIndex = style.indexOf('skew');
+        transformEndIndex = transformIndex+style.substring(transformIndex).indexOf(')')+1;
+        pre = style.substring(0, transformIndex);
+        post = style.substring(transformEndIndex);
+
+        style = pre+skewStyle+post;
+        element.setAttribute('style', style);
     }
 };
