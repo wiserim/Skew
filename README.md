@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/wiserim/skew/master/assets/logo.png" alt="Skew">
+  <img src="/assets/logo.png" alt="Skew">
 </p>
 
 
@@ -8,7 +8,8 @@
 **Features:**
 * calculation of skew transformation measured in pixels,
 * skew update on resize,
-* can be used standalone and with jQuery,
+* dependency free,
+* can be used standalone with plain JavaScript or as jQuery plugin,
 * responsiveness - breakpoints definition,
 * debouncing (optional),
 * cross-browser - supports IE9+ and modern browsers,
