@@ -3,12 +3,16 @@
 </p>
 
 
-**Skew** is a standalone JavaScript library for performing skew transformations of DOM elements measured in pixels. It allows to keep element's skew by the same amount of pixels even after it's resize and optionally unskew its content.
+**Skew** is a dependency free JavaScript library for performing skew transformations of DOM elements measured in pixels. It allows to keep element's skew by the same amount of pixels and unskew its content.
+
+
+[![GitHub](https://img.shields.io/github/license/wiserim/Skew.svg)](https://github.com/wiserim/Skew/blob/master/LICENSE) [![Github file size](https://img.shields.io/github/size/wiserim/Skew/skew.min.js.svg)](https://github.com/wiserim/Skew)
+
 
 **Features:**
 * calculation of skew transformation measured in pixels,
 * unskew element's content, 
-* skew update on resize,
+* skew update on window resize,
 * dependency free,
 * can be used standalone with plain JavaScript or as jQuery plugin,
 * responsiveness - breakpoints definition,
@@ -25,7 +29,7 @@ Before closing ```<body>``` tag add:
   Then add script:
   ```javascript
   window.onload = function() {
-    var Skew = new Skew('css selector', {x: 50});
+    var Skew = new Skew('selector', {x: 50});
   }
   ```
   or use jQuery:
@@ -39,7 +43,7 @@ Before closing ```<body>``` tag add:
 
 JavaScript:
 ```javascript
-var skewObj = new Skew('css selector', {option: value});
+var skewObj = new Skew('selector', {option: value});
 //example
 var skewObj = new Skew('.skew', {x: 50, y: 100, breakpoints: [{break: 768, x: 30}]});
 
