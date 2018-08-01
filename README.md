@@ -5,8 +5,7 @@
 
 **Skew** is a dependency free JavaScript library for performing skew transformations of DOM elements measured in pixels. It allows to keep element's skew by the same amount of pixels and unskew its content.
 
-
-[![GitHub](https://img.shields.io/github/license/wiserim/Skew.svg)](https://github.com/wiserim/Skew/blob/master/LICENSE) [![Github file size](https://img.shields.io/github/size/wiserim/Skew/skew.min.js.svg)](https://github.com/wiserim/Skew)
+[![GitHub release](https://img.shields.io/github/release/wiserim/Skew.svg)](https://github.com/wiserim/Skew/releases)   [![GitHub](https://img.shields.io/github/license/wiserim/Skew.svg)](https://github.com/wiserim/Skew/blob/master/LICENSE)   [![Github file size](https://img.shields.io/github/size/wiserim/Skew/skew.min.js.svg)](https://github.com/wiserim/Skew)
 
 
 **Features:**
