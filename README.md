@@ -24,10 +24,16 @@
 npm install skewjs
 ```
 
+***CDN***
+
+[https://www.jsdelivr.com/package/npm/skewjs](https://www.jsdelivr.com/package/npm/skewjs)
+
 ## Getting started
 Before closing ```<body>``` tag add:
   ```html
   <script type="text/javascript" src="skew.min.js"></script>
+  <!--CDN-->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/skewjs@0.6.0/skew.min.js"></script>
   ```
   
   Then add script:
