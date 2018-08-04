@@ -5,7 +5,7 @@
 
 **Skew** is a dependency free JavaScript library for performing skew transformations of DOM elements measured in pixels. It allows to keep element's skew by the same amount of pixels and unskew its content.
 
-[![GitHub release](https://img.shields.io/github/release/wiserim/Skew.svg)](https://github.com/wiserim/Skew/releases)   [![GitHub](https://img.shields.io/github/license/wiserim/Skew.svg)](https://github.com/wiserim/Skew/blob/master/LICENSE)   [![Github file size](https://img.shields.io/github/size/wiserim/Skew/skew.min.js.svg)](https://github.com/wiserim/Skew)
+[![GitHub release](https://img.shields.io/github/release/wiserim/Skew.svg)](https://github.com/wiserim/Skew/releases) [![npm](https://img.shields.io/npm/v/skewjs.svg)](https://www.npmjs.com/package/skewjs)    [![GitHub](https://img.shields.io/github/license/wiserim/Skew.svg)](https://github.com/wiserim/Skew/blob/master/LICENSE)   [![Github file size](https://img.shields.io/github/size/wiserim/Skew/skew.min.js.svg)](https://github.com/wiserim/Skew)
 
 
 **Features:**
@@ -18,6 +18,11 @@
 * configurable debouncing,
 * cross-browser - supports IE9+ and modern browsers,
 * lightweight - ~4kB minified.
+
+***NPM***
+```
+npm install skewjs
+```
 
 ## Getting started
 Before closing ```<body>``` tag add:
