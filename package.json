@@ -1,0 +1,26 @@
+{
+  "name": "skewjs",
+  "version": "0.6.0",
+  "description": "Simple, lightweight dependency free library for skewing DOM elements in pixels.",
+  "main": "skew.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wiserim/Skew.git"
+  },
+  "keywords": [
+    "Skew",
+    "js",
+    "transform",
+    "responsive",
+    "DOM manipulation"
+  ],
+  "author": "Marcin Walczak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wiserim/Skew/issues"
+  },
+  "homepage": "https://github.com/wiserim/Skew"
+}
