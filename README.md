@@ -87,7 +87,7 @@ $('.skew').skew('update', {x: 30, breakpoints: [{break: 768, x: 15}]});
   
   ```javascript
   //Unskew element's content
-  ar skewObj = new Skew(
+  var skewObj = new Skew(
     '.skew',
     {
       x: 30,
@@ -96,7 +96,7 @@ $('.skew').skew('update', {x: 30, breakpoints: [{break: 768, x: 15}]});
   );
   
   //Unskew element's content matching css selector
-  ar skewObj = new Skew(
+  var skewObj = new Skew(
     '.skew',
     {
       x: 30,
@@ -105,7 +105,7 @@ $('.skew').skew('update', {x: 30, breakpoints: [{break: 768, x: 15}]});
   );
   
   //Don't unskew element's content (default)
-  ar skewObj = new Skew(
+  var skewObj = new Skew(
     '.skew',
     {
       x: 30,
