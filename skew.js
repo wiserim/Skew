@@ -172,7 +172,7 @@ Skew.prototype = {
         }
 
         for(var i = 0; i < this.options.beforeSkewListeners.length; i++) {
-            this.options.beforeSkewListeners[i](self);
+            this.options.beforeSkewListeners[i](self, self.targets);
         }
         
         for(var i=0; i < self.targets.length; i++){
@@ -202,12 +202,12 @@ Skew.prototype = {
             };
             
             for(var j = 0; j < this.options.afterElementSkewListeners.length; j++) {
-                this.options.afterElementSkewListeners[j](self);
+                this.options.afterElementSkewListeners[j](self, target);
             }
         }
 
         for(var i = 0; i < this.options.afterSkewListeners.length; i++) {
-            this.options.afterSkewListeners[i](self, target);
+            this.options.afterSkewListeners[i](self, self.targets);
         }
 
         return this;
