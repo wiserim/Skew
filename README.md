@@ -17,7 +17,7 @@
 * responsiveness - breakpoints definition,
 * configurable debouncing,
 * cross-browser - supports IE9+ and modern browsers,
-* lightweight - ~4kB minified.
+* lightweight - ~5kB minified.
 
 ***NPM***
 ```
@@ -82,6 +82,10 @@ $('.skew').skew('update', {x: 30, breakpoints: [{break: 768, x: 15}]});
   breakpoints | array | [] | Array of objects containing breakpoints and setting objects ([see example](#breakpoints-option-example)).
   debounce | boolean | true | Debounce on resize event.
   debounceTime | int | 50 | Debounce time tollerance in ms.
+  beforeSkew | array/function | [] | function/array of functions fired before skew ([see events](#events)).
+  afterSkew | array/function | [] | function/array of functions fired after skew ([see events](#events)).
+  beforeElementSkew | array/function | [] | function/array of functions fired before single element's skew ([see events](#events)).
+  afterElementSkew | array/function | [] | function/array of functions fired after single element's skew ([see events](#events)).
   
   ### Unskew option example
   
@@ -148,8 +152,23 @@ $('.skew').skew('update', {x: 30, breakpoints: [{break: 768, x: 15}]});
 
   ## Methods
 
-  Method | Argument | Description
+  Method | Arguments | Description
   ------------ | ------------- | ------------
   skew | | Recalculates skew
   update | options : object | Update Skew options
   destroy | | Destroys Skew
+  beforeSkew | listener : function | Add listener to beforeSkew event ([see events](#events))
+  afterSkew | listener : function | Add listener to afterSkew event ([see events](#events))
+  beforeElementSkew | listener : function | Add listener to beforeElementSkew event ([see events](#events))
+  afterElementSkew | listener : function | Add listener to afterElementSkew event ([see events](#events))
+  
+  ## Events
+  
+  Events has been added with version 0.7.
+  
+  Event | Params | Description
+  ------------ | ------------- | ------------
+  beforeSkew | skewObj, targets | Before start of skewing elements.
+  afterSkew | skewObj, targets | After skewing all elements.
+  beforeElementSkew | skewObj, target | Before skew of every element.
+  afterElementSkew | skewObj, target | After skew of every element.
