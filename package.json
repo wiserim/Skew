@@ -1,6 +1,6 @@
 {
   "name": "skewjs",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Simple, lightweight dependency free library for skewing DOM elements in pixels.",
   "main": "skew.js",
   "scripts": {

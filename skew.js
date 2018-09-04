@@ -1,5 +1,5 @@
 /*!
-* Skew v0.6
+* Skew v0.7
 * Copyright 2018 Marcin Walczak
 *This file is part of Skew which is released under MIT license.
 *See LICENSE for full license details.
@@ -66,7 +66,11 @@ function Skew(elements, settings) {
         unskewContent: false,
         breakpoints: [],
         debounce: true,
-        debounceTime: 50
+        debounceTime: 50,
+        beforeSkewListeners: [],
+        afterSkewListeners: [],
+        beforeElementSkewListeners: [],
+        afterElementSkewListeners: []
     };
 
     this.options = this.defaults;
@@ -79,7 +83,7 @@ function Skew(elements, settings) {
 
     var self = this;
 
-
+    //events
     //method fired on load/resize event, can be used to debounce custom events.
     this.eventMethod = function() {
         var debounce = self.options.debounce;
@@ -166,9 +170,19 @@ Skew.prototype = {
                 self.currentUnskewContent = unskewContent;
             }
         }
+
+        for(var i = 0; i < this.options.beforeSkewListeners.length; i++) {
+            this.options.beforeSkewListeners[i](self);
+        }
         
         for(var i=0; i < self.targets.length; i++){
-            target = self.targets[i];    
+            target = self.targets[i];
+            
+            for(var j= 0; j < this.options.beforeElementSkewListeners.length; j++) {
+                this.options.beforeElementSkewListeners[j](self, target);
+            }
+            
+
             width = target.offsetWidth;
             height = target.offsetHeight;
 
@@ -186,6 +200,14 @@ Skew.prototype = {
             for(var j=0; j < content.length; j++){
                 self.setSkewStyle(content[j], contentSkewStyle);
             };
+            
+            for(var j = 0; j < this.options.afterElementSkewListeners.length; j++) {
+                this.options.afterElementSkewListeners[j](self);
+            }
+        }
+
+        for(var i = 0; i < this.options.afterSkewListeners.length; i++) {
+            this.options.afterSkewListeners[i](self, target);
         }
 
         return this;
@@ -213,12 +235,20 @@ Skew.prototype = {
                 var post = style.substring(skewEndIndex);
                 target.setAttribute('style', pre+post);
             }
-
         }
     },
 
     parseSettings: function(settings, defaults) {
         var results = (defaults !== undefined ? defaults : this.defaults);
+        var addEventListener = function(eventArray, listeners) {
+            if(listeners !== undefined)
+                if(Array.isArray(listeners))
+                    listeners.forEach(function(listener) {
+                        eventArray.push(listener);
+                    });
+                else
+                    eventArray.push(listeners);
+        }
         
         if(settings !== undefined) {
             if(settings.x !== undefined)
@@ -270,6 +300,18 @@ Skew.prototype = {
 
             if(settings.debounceTime !== undefined)
                 results.debounceTime = settings.debounceTime;
+
+            results.beforeSkewListeners= defaults.beforeSkewListeners;
+            addEventListener(results.beforeSkewListeners, settings.beforeSkew);
+
+            results.afterSkewListeners = defaults.afterSkewListeners;
+            addEventListener(results.afterSkewListeners, settings.afterSkew);
+
+            results.beforeElementSkewListeners = defaults.beforeElementSkewListeners;
+            addEventListener(results.beforeElementSkewListeners, settings.beforeElementSkew);
+
+            results.afterElementSkewListeners = defaults.afterElementSkewListeners;
+            addEventListener(results.afterElementSkewListeners, settings.afterElementSkew);
         }
         return results;
     },
@@ -314,5 +356,25 @@ Skew.prototype = {
 
         style = pre+skewStyle+post;
         element.setAttribute('style', style);
+    },
+
+    beforeSkew: function(listener) {
+       this.options.beforeSkewListeners.push(listener);
+       return this;
+    },
+
+    afterSkew: function(listener) {
+        this.options.afterSkewListeners.push(listener);
+        return this;
+    },
+
+    beforeElementSkew: function(listener) {
+       this.options.beforeElementSkewListeners.push(listener);
+       return this;
+    },
+
+    afterElementSkew: function(listener) {
+        this.options.afterElementSkewListeners.push(listener);
+        return this;
     }
 };
