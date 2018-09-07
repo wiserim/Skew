@@ -1,5 +1,5 @@
 /*!
-* Skew v0.7
+* Skew v0.7.1
 * Copyright 2018 Marcin Walczak
 *This file is part of Skew which is released under MIT license.
 *See LICENSE for full license details.
@@ -158,7 +158,7 @@ Skew.prototype = {
 
                     if(self.currentUnskewContent === true)
                         content = target.childNodes;
-                    else if(typeof self.currentUnskewContent == 'string')
+                    else if(typeof self.currentUnskewContent == 'string' && self.currentUnskewContent != '')
                         content = target.querySelectorAll(self.currentUnskewContent);
 
                     for(var j=0; j < content.length; j++){
@@ -193,7 +193,7 @@ Skew.prototype = {
 
             if(unskewContent === true)
                 content = target.childNodes;
-            else if(typeof unskewContent == 'string')
+            else if(typeof unskewContent == 'string' && unskewContent != '')
                 content = target.querySelectorAll(unskewContent);
 
             contentSkewStyle = 'skew('+(-skewXAngle)+'rad, '+(-skewYAngle)+'rad)';
@@ -317,6 +317,9 @@ Skew.prototype = {
     },
 
     setSkewStyle: function(element, skewStyle) {
+        if(element.nodeType != Node.ELEMENT_NODE)
+            return;
+            
         var style = element.getAttribute('style');
 
         if(style === null) {
