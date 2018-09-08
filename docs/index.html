@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Skew</title>
+    <meta property="og:title" content="Skew">
+    <meta property="og:locale" content="en_US">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="Skew is a simple, lightweight, dependency free library for skewing DOM elements in pixels.">
+    <meta property="og:description" content="Skew is a simple, lightweight, dependency free library for skewing DOM elements in pixels.">
+    <link rel="canonical" href="https://wiserim.github.io/skew/">
+    <meta property="og:url" content="https://wiserim.github.io/skew/">
+    <meta property="og:site_name" content="Skew">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name"><i>Skew</i></h1>
+      <h2 class="project-tagline">Simple, lightweight, dependency free library for skewing DOM elements in pixels.</h2>
+
+      <a href="#demo" class="btn">Demo</a>
+      <a href="https://github.com/wiserim/Skew" target="_blank" class="btn">View on GitHub</a>
+      <a href="https://github.com/wiserim/Skew/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/wiserim/Skew/tarball/master" class="btn">Download .tar.gz</a>
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      <p><strong>Skew</strong> is a dependency free JavaScript library for performing skew transformations of DOM elements measured in pixels. It allows to keep element's skew by the same amount of pixels and unskew its content.</p>
+      <p>
+        <strong>Features:</strong>
+        <ul>
+          <li>calculation of skew transformation measured in pixels,</li>
+          <li>unskew element's content,</li>
+          <li>skew update on window resize,</li>
+          <li>dependency free,</li>
+          <li>can be used standalone with plain JavaScript or as jQuery plugin,</li>
+          <li>responsiveness - breakpoints definition,</li>
+          <li>configurable debouncing,</li>
+          <li>cross-browser - supports IE9+ and modern browsers,</li>
+          <li>lightweight - ~5kB minified.</li>
+        </ul>
+      </p>
+
+      <h3>NPM</h3>
+      <pre class="highlight">npm install skewjs</pre>
+
+      <h3>CDN</h3>
+      <p><a href="https://www.jsdelivr.com/package/npm/skewjs" target="_blank">https://www.jsdelivr.com/package/npm/skewjs</a></p>
+
+      <h2 id="demo">Demo</h2>
+      <div class="skew-demo">
+          <div class="skew-container highlight">
+            <div id="skew-element" class="skew-element">
+              &lt;div class="skew-element"&gt;
+              <div class="skew-content">
+                &lt;div class="skew-content"&gt;
+                <p>&lt;p&gt;Paragraph <span>&lt;span&gt;Span&lt;/span&gt;</span>&lt;/p&gt;</p>
+                <p>&lt;p&gt;Paragraph <span>&lt;span&gt;Span&lt;/span&gt;</span>&lt;/p&gt;</p>
+                <p>&lt;p&gt;Paragraph <span>&lt;span&gt;Span&lt;/span&gt;</span>&lt;/p&gt;</p>
+                &lt;/div&gt;
+              </div>
+              &lt;/div&gt;
+          </div>
+        </div>
+        <div id="skew-control" class="skew-control">
+          <p><strong>Skew control</strong></p>
+          <div>
+            <label for="skew-x">Skew x</label>
+            <input id="skew-x" class="slider" type="range" min="-100" max="100" value="0"/>
+          </div>
+          <div>
+            <label for="skew-y">Skew y</label>
+            <input id="skew-y" class="slider" type="range" min="-100" max="100" value="0"/>
+          </div>
+          <div>
+              <label for="unskew">Unskew content</label>
+              <select id="unskew">
+                <option value="true">True</option>
+                <option value="false" selected="selected">False</option>
+                <option value="selector">By selector</option>
+              </select>
+              <input id="unskew-selector" type="text" value="" placeholder="Enter CSS selector"/> 
+          </div>
+        </div>
+      </div>
+
+      <h2>Getting started</h2>
+      <p>Before closing &lt;body&gt; tag add:</p>
+      <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">&lt;script <span class="nt">type</span>=<span class="s1">"text/javascript"</span> <span class="nt">src</span>=<span class="s1">"skew.min.js"</span>&gt;&lt;/script&gt;</span><br/><span class="w">&lt;--CDN--&gt;</span><br/><span class="nx">&lt;script <span class="nt">type</span>=<span class="s1">"text/javascript"</span> <span class="nt">src</span>=<span class="s1">"https://cdn.jsdelivr.net/npm/skewjs@0.7.1/skew.min.js"</span>&gt;&lt;/script&gt;</span></code></pre></div></div>
+      <p>Then add script:</p>
+      <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">window</span>.<span class="no">onload</span> = <span class="sr">function</span>() {<br/>  <span class="kd">var</span> <span class="nl">Skew</span> = <span class="kd">new</span> <span class="sr">Skew</span>(<span class="s1">'selector'</span>, {<span class="nt">x</span>: <span class="s1">50</span></span>});<br/>}</code></pre></div></div>
+      <p>or use jQuery:</p>
+      <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><span class="sr">$</span>(<span class="sr">function</span>() {<br/>  <span class="sr">$</span>(<span class="s1">'selector'</span>).<span class="sr">skew</span>({<span class="nt">x</span>: <span class="s1">50</span>});<br/>});</code></pre></div></div>
+      <footer class="site-footer text-center">
+        <span class="site-footer-credits">2018 &copy; <a href="https://github.com/wiserim">Wiserim</a></span>
+      </footer>
+    </main>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/skewjs@0.7.1/skew.js"></script>
+    <script  type="text/javascript" src="js/script.js"></script>
+  </body>
+</html>
