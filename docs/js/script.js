@@ -46,10 +46,10 @@ function demo(container, control) {
 
 window.addEventListener('load', function(){
     demo('#skew-element', '#skew-control');
-    var sliders = document.querySelectorAll('.slider');
+    var sliders = document.querySelectorAll('.slider input[type="range"]');
     for(var i = 0, size = sliders.length; i<size;i++) {
         sliders[i].addEventListener('input', function(e){
-            e.target.setAttribute('value', e.target.value);
+            e.target.parentNode.setAttribute('data-value', e.target.value);
         });
     };
 });
