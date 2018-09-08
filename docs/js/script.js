@@ -10,21 +10,24 @@ function demo(container, control) {
 
     var unskewContent = function(){
         switch(controls.unskewContent.value) {
-            case 'true': 
+            case 'true':
+                controls.unskewContentSelector.disabled = true;
                 return true;
                 break;
-            case 'false': 
+            case 'false':
+                controls.unskewContentSelector.disabled = true;
                 return false;
                 break;
             case 'selector':
                 var selector = controls.unskewContentSelector.value;
+                controls.unskewContentSelector.disabled = false;
                 try {
                     document.querySelector(selector);
                     return selector;
                 }
                 catch(error) {
                     return '';
-                }           
+                };
         }
     }
 
