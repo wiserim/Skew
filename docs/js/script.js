@@ -38,7 +38,9 @@ function demo(container, control) {
     });
 
     controls.skewX.addEventListener('input', function(e){skew.update({x: e.target.value})},false);
+    controls.skewX.addEventListener('mouseup', function(e){skew.update({x: e.target.value})},false);
     controls.skewY.addEventListener('input', function(e){skew.update({y: e.target.value})},false);
+    controls.skewY.addEventListener('click', function(e){skew.update({y: e.target.value})},false);
     controls.unskewContent.addEventListener('input', function(e){skew.update({unskewContent: unskewContent()})},false);
     controls.unskewContent.addEventListener('change', function(e){skew.update({unskewContent: unskewContent()})},false);
     controls.unskewContentSelector.addEventListener('input', function(e){skew.update({unskewContent: unskewContent()})},false);
@@ -49,6 +51,9 @@ window.addEventListener('load', function(){
     var sliders = document.querySelectorAll('.slider input[type="range"]');
     for(var i = 0, size = sliders.length; i<size;i++) {
         sliders[i].addEventListener('input', function(e){
+            e.target.parentNode.setAttribute('data-value', e.target.value);
+        });
+        sliders[i].addEventListener('mouseup', function(e){
             e.target.parentNode.setAttribute('data-value', e.target.value);
         });
     };
