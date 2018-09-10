@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/assets/logo.png" alt="Skew">
+  <img src="/docs/img/logo.png" alt="Skew">
 </p>
 
 
