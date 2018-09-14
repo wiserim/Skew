@@ -78,14 +78,14 @@ $('.skew').skew('update', {x: 30, breakpoints: [{break: 768, x: 15}]});
   ------------ | ------------- | ------------ | -------------
   x | int | 0 | Element's skew on x axis in pixels.
   y | int | 0 | Element's skew on y axis in pixels.
-  unskewContent | bool/string | false | Element's content unskew option / css selector of element's content to unskew ([see example](#unskew-option-example))
+  unskewContent | bool/string | false | Element's content unskew option / css selector of element's content to unskew ([see example](#unskew-option-example)).
   breakpoints | array | [] | Array of objects containing breakpoints and setting objects ([see example](#breakpoints-option-example)).
   debounce | boolean | true | Debounce on resize event.
   debounceTime | int | 50 | Debounce time tollerance in ms.
-  beforeSkew | array/function | [] | function/array of functions fired before skew ([see events](#events)).
-  afterSkew | array/function | [] | function/array of functions fired after skew ([see events](#events)).
-  beforeElementSkew | array/function | [] | function/array of functions fired before single element's skew ([see events](#events)).
-  afterElementSkew | array/function | [] | function/array of functions fired after single element's skew ([see events](#events)).
+  beforeSkew | array/function | [] | Function/array of functions fired before skew ([see events](#events)).
+  afterSkew | array/function | [] | Function/array of functions fired after skew ([see events](#events)).
+  beforeElementSkew | array/function | [] | Function/array of functions fired before single element's skew ([see events](#events)).
+  afterElementSkew | array/function | [] | Function/array of functions fired after single element's skew ([see events](#events)).
   
   ### Unskew option example
   
