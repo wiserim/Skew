@@ -28,16 +28,17 @@
       <a href="https://github.com/wiserim/Skew" target="_blank" class="btn">View on GitHub</a>
       <a href="https://github.com/wiserim/Skew/zipball/master" class="btn">Download .zip</a>
       <a href="https://github.com/wiserim/Skew/tarball/master" class="btn">Download .tar.gz</a>
-    </header>
-
-    <main id="content" class="main-content" role="main">
-      <p><strong>Skew</strong> is a dependency free JavaScript library for performing skew transformations of DOM elements measured in pixels. It allows to keep element's skew by the same amount of pixels and unskew its content.</p>
       <p class="text-center">
         <a href="https://github.com/wiserim/Skew/releases" target="_blank"><img src="https://img.shields.io/github/release/wiserim/Skew.svg" alt="GitHub release"/></a>
         <a href="https://www.npmjs.com/package/skewjs" target="_blank"><img src="https://img.shields.io/npm/v/skewjs.svg" alt="NPM"/></a>
         <a href="https://github.com/wiserim/Skew/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/wiserim/Skew.svg" alt="License"/></a>
         <a href="https://github.com/wiserim/Skew" target="_blank"><img src="https://img.shields.io/github/size/wiserim/Skew/skew.min.js.svg" alt="Github file size"/></a>
       </p>
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      <p><strong>Skew</strong> is a dependency free JavaScript library for performing skew transformations of DOM elements measured in pixels. It allows to keep element's skew by the same amount of pixels and unskew its content.</p>
+      
       <p>
         <strong>Features:</strong>
         <ul>
@@ -109,6 +110,169 @@
       <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nl">skewObj</span> = <spna class="kd">new</spna> <span class="sr">Skew</span>(<span class="s1">'selector'</span>, {<span class="nt">option</span>: <span class="s1">value</span>});<br/><span class="w">//example</span><br/><span class="kd">var</span> <span class="nl">skewObj</span> = <span class="kd">new</span> <span class="sr">Skew</span>(<span class="s1">'.skew'</span>, {<span class="nt">x</span>: <span class="s1">50</span>, <span class="nt">y</span>: <span class="s1">100</span>, <span class="nt">breakpoints</span>: [{<span class="nt">break</span>: <span class="s1">768</span>, <span class="nt">x</span>: <span class="s1">30</span>}]});<br/><br/><span class="nl">skewObject</span>.<span class="sr">method</span>(<span class="s1">argument</span>);<br/><span class="w">//example</span><br/><span class="nl">skewObject</span>.<span class="sr">update</span>({<span class="nt">x</span>: <span class="s1">30</span>, <span class="nt">breakpoints</span>: [{<span class="nt">break</span>: <span class="s1">768</span>, <span class="nt">x</span>: <span class="s1">15</span>}]});</code></pre></div></div>
       <p>JQuery:</p>
       <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sr">$</span>(<span class="s1">'selector'</span>).<span class="sr">skew</span>({<span class="nt">option</span>: <span class="s1">value</span>});<br/><span class="w">//example</span><br/><span class="sr">$</span>(<span class="s1">'.skew'</span>).<span class="sr">skew</span>({<span class="nt">x</span>: <span class="s1">50</span>, <span class="nt">y</span>: <span class="s1">100</span>, <span class="nt">breakpoints</span>: [{<span class="nt">break</span>: <span class="s1">768</span>, <span class="nt">x</span>: <span class="s1">30</span>}]});<br/><br/><span class="sr">$</span>(<span class="s1">'selector'</span>).<span class="sr">skew</span>(<span class="s1">'method'</span>, <span class="s1">argument</span>);<br/><span class="w">//example</span><br/><span class="sr">$</span>('.skew').<span class="sr">skew</span>(<span class="s1">'update'</span>, {<span class="nt">x</span>: <span class="s1">30</span>, <span class="nt">breakpoints</span>: [{<span class="nt">break</span>: <span class="s1">768</span>, <span class="nt">x</span>: <span class="s1">15</span>}]});</code></pre></div></div>
+
+      <h2>Options</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>x</td>
+              <td>int</td>
+              <td>0</td>
+              <td>Element's skew on x axis in pixels.</td>
+            </tr>
+            <tr>
+              <td>y</td>
+              <td>int</td>
+              <td>0</td>
+              <td>Element's skew on y axis in pixels.</td>
+            </tr>
+            <tr>
+              <td>unskewContent</td>
+              <td>boolean/string</td>
+              <td>false</td>
+              <td>Element's content unskew option / css selector of element's content to unskew (<a href="#unskew-example">see example</a>).</td>
+            </tr>
+            <tr>
+              <td>breakpoints</td>
+              <td>array</td>
+              <td>[]</td>
+              <td>Array of objects containing breakpoints and setting objects (<a href="#breakpoints-example">see example</a>).</td>
+            </tr>
+            <tr>
+              <td>debounce</td>
+              <td>boolean</td>
+              <td>true</td>
+              <td>Debounce on resize event.</td>
+            </tr>
+            <tr>
+              <td>debounceTime</td>
+              <td>int</td>
+              <td>50</td>
+              <td>Debounce time tollerance in ms.</td>
+            </tr>
+            <tr>
+              <td>beforeSkew</td>
+              <td>array/function</td>
+              <td>[]</td>
+              <td>Function/array of functions fired before skew (<a href="#events-example">see events</a>).</td>
+            </tr>
+            <tr>
+              <td>afterSkew</td>
+              <td>array/function</td>
+              <td>[]</td>
+              <td>Function/array of functions fired after skew (<a href="#events-example">see events</a>).</td>
+            </tr>
+            <tr>
+              <td>beforeElementSkew</td>
+              <td>array/function</td>
+              <td>[]</td>
+              <td>Function/array of functions fired before single element's skew (<a href="#events-example">see events</a>).</td>
+            </tr>
+            <tr>
+              <td>afterElementSkew</td>
+              <td>array/function</td>
+              <td>[]</td>
+              <td>Function/array of functions fired after single element's skew (<a href="#events-example">see events</a>).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="unskew-example">Unskew option example</h2>
+      <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">//Unskew element's content</span><br/><span class="kd">var</span> <span class="nl">skewObj</span> = <span class="kd">new</span> <span class="sr">Skew</span>(<br/>  <span class="s1">'.skew'</span>,<br/>{<br/>    <span class="nt">x</span>: <span class="s1">30</span>,<br/>    <span class="nt">unskewContent</span>: <span class="s1">true</span><br/>  }<br/>);<br/><br/><span class="w">//Unskew element's content matching css selector</span><br/><span class="kd">var</span> <span class="nl">skewObj</span> = <span class="kd">new</span> <span class="sr">Skew</span>(<br/>  <span class="s1">'.skew'</span>,<br/>  {<br/>    <span class="nt">x</span>: <span class="s1">30</span>,<br/>    <span class="nt">unskewContent</span>: <span class="s1">'.skew-content'</span><br/>  }<br/>);<br/><br/><span class="w">//Don't unskew element's content (default)</span><br/><span class="kd">var</span> <span class="nl">skewObj</span> = <span class="kd">new</span> <span class="sr">Skew</span>(<br/>  <span class="s1">'.skew',</span><br/>  {<br/>    <span class="nt">x</span>: <span class="s1">30</span>,<br/>    <span class="nt">unskewContent</span>: <span class="s1">false</span><br/>  }<br/>);</code></pre></div></div>
+
+      <h2 id="breakpoints-example">Breakpoints option example</h2>
+      <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nl">skewObj</span> = <span class="kd">new</span> <span class="sr">Skew</span>(<br/>  <span class="s1">'.skew'</span>,<br/>  {<br/>    <span class="nt">x</span>: <span class="s1">30</span>,<br/>    <span class="nt">y</span>: <span class="s1">60</span>,<br/>    <span class="nt">breakpoints</span>: [<br/>      {<br/>        <span class="nt">break</span>: <span class="s1">1024</span>,<br/>        <span class="nt">x</span>: <span class="s1">60</span>,<br/>        <span class="nt">y</span>: <span class="s1">30</span>,<br/>        <span class="nt">unskewContent</span>: <span class="s1">true</span>,<br/>        <span class="nt">debounce</span>: <span class="s1">false</span>,<br/>        <span class="nt">debounceTime</span>: <span class="s1">30</span><br/>      },<br/>      {<br/>        <span class="nt">break</span>: <span class="s1">768</span>,<br/>        <span class="nt">x</span>: <span class="s1">30</span>,<br/>        <span class="nt">unskewContent</span>: <span class="s1">'.skew-content'</span><br/>      },<br/>      {<br/>        <span class="nt">break</span>: 480</span>,<br/>        <span class="nt">y</span>: 60</span><br/>      }<br/>    ]<br/>  }<br/>);</code></pre></div></div>
+
+      <h2>Methods</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Arguments</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>skew</td>
+            <td></td>
+            <td>Recalculates skew.</td>
+          </tr>
+          <tr>
+            <td>update</td>
+            <td>options : object</td>
+            <td>Update Skew options.</td>
+          </tr>
+          <tr>
+            <td>destroy</td>
+            <td></td>
+            <td>  Destroys Skew.</td>
+          </tr>
+          <tr>
+            <td>beforeSkew</td>
+            <td>listener:&nbsp;function</td>
+            <td>Add listener to beforeSkew event (<a href="#events-example">see events</a>).</td>
+          </tr>
+          <tr>
+            <td>afterSkew</td>
+            <td>listener:&nbsp;function</td>
+            <td>Add listener to afterSkew event (<a href="#events-example">see events</a>).</td>
+          </tr>
+          <tr>
+            <td>beforeElementSkew</td>
+            <td>listener:&nbsp;function</td>
+            <td>Add listener to beforeElementSkew event (<a href="#events-example">see events</a>).</td>
+          </tr>
+          <tr>
+            <td>afterElementSkew</td>
+            <td>listener:&nbsp;function</td>
+            <td>Add listener to afterElementSkew event (<a href="#events-example">see events</a>).</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="events-example">Events</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Params</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>beforeSkew</td>
+            <td>skewObj, targets</td>
+            <td>Before start of skewing elements.</td>
+          </tr>
+          <tr>
+            <td>afterSkew</td>
+            <td>skewObj, targets</td>
+            <td>After skewing all elements.</td>
+          </tr>
+          <tr>
+            <td>beforeElementSkew</td>
+            <td>skewObj, target</td>
+            <td>Before skew of every element.</td>
+          </tr>
+          <tr>
+            <td>afterElementSkew</td>
+            <td>skewObj, target</td>
+            <td>After skew of every element.</td>
+          </tr>
+        </tbody>
+      </table>
 
       <footer class="site-footer text-center">
         <span class="site-footer-credits">2018 &copy; <a href="https://github.com/wiserim">Wiserim</a></span>

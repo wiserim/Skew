@@ -877,7 +877,10 @@ a:hover {
     color: #819198
 }
 
+.text-left {text-align: left;}
 .text-center {text-align: center;}
+
+.table-wrapper {overflow: auto;}
 
 .skew-demo {}
 .skew-demo:after {content: ''; display: table; clear: both;}
